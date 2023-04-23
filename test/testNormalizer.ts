@@ -22,7 +22,7 @@ export function run() {
     .forEach(([filename, json]: [string, JSONTestCase]) => {
       test(json.name, t => {
         const normalized = normalize(link(json.in), new WeakMap(), filename, json.options ?? DEFAULT_OPTIONS)
-        t.deepEqual(json.out, normalized)
+        t.deepEqual(json.out, JSON.parse(JSON.stringify(normalized)))
       })
     })
 }

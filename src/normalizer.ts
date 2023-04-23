@@ -222,6 +222,31 @@ rules.set('Transform const to singleton enum', schema => {
   }
 })
 
+rules.set('Transform nullable to anyOf', schema => {
+  if (schema.nullable !== true || schema.anyOf) {
+    return
+  }
+
+  delete schema.nullable
+
+  schema.anyOf = [
+    {
+      ...schema,
+      [Parent]: schema
+    },
+    {
+      type: 'null',
+      [Parent]: schema
+    }
+  ]
+
+  Object.keys(schema).forEach(key => {
+    if (key !== 'anyOf') {
+      delete schema[key]
+    }
+  })
+})
+
 export function normalize(
   rootSchema: LinkedJSONSchema,
   dereferencedPaths: DereferencedPaths,

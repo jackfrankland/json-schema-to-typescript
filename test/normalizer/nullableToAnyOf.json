@@ -1,0 +1,19 @@
+{
+  "name": "Normalize nullable to anyOf",
+  "in": {
+    "$id": "foo",
+    "type": "string",
+    "nullable": true
+  },
+  "out": {
+    "anyOf": [
+      {
+        "$id": "foo",
+        "type": "string"
+      },
+      {
+        "type": "null"
+      }
+    ]
+  }
+}
